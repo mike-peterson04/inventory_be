@@ -31,15 +31,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'corsheaders',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
-    'inventory_manager.apps.InventoryApiConfig',
+    'rest_framework',
+    'inventory_api.apps.InventoryApiConfig',
 ]
 
 MIDDLEWARE = [

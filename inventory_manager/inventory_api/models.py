@@ -1,10 +1,13 @@
 from django.db import models
+from django.conf import settings
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Employees(models.Model):
     name = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
-    role = models.ForeignKey('Role', on_delete=models.RESTRICT, default=None, blank=True)
+    role = models.ForeignKey('Role', on_delete=models.RESTRICT, default=None, blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, blank=True, null=True)
 
 
 class Role(models.Model):
@@ -12,7 +15,7 @@ class Role(models.Model):
 
 
 class Status(models.Model):
-    name= models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
     available = models.BooleanField()
 
 
@@ -22,12 +25,27 @@ class Products(models.Model):
     status = models.ForeignKey('Status', on_delete=models.RESTRICT)
     model = models.ForeignKey('Type', on_delete=models.RESTRICT)
     Storefront = models.ForeignKey('Storefront', on_delete=models.RESTRICT)
+    Assigned_Employee = models.ManyToManyField(Employees)
 
 
 class Type(models.Model):
     name = models.CharField(max_length=50)
 
+
 class Storefront(models.Model):
     manager = models.ForeignKey('Employees', on_delete=models.RESTRICT)
     name = models.CharField(max_length=50)
 
+
+class AssignedProducts(models.Model):
+    employee = models.ForeignKey(Employees, on_delete=models.CASCADE)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    checked_out = models.BooleanField(default=True)
+    date_returned = models.DateField(default=None, blank=True, null=True)
+
+
+class Request(models.Model):
+    product = models.ForeignKey('Type', on_delete=models.RESTRICT)
+    quantity = models.IntegerField(default=1)
+    priority = models.IntegerField(default=5,
+                                   validators=[MaxValueValidator(5), MinValueValidator(0)])

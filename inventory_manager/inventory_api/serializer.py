@@ -47,17 +47,20 @@ class AssignedProductsSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+
     class Meta:
         model = User
-        fields = ['username', 'password', 'password2']
+        fields = ['username','email', 'password', 'password2']
         extra_kwargs = {
             'password': {'write_only': True}
         }
-    def create(self,validated_data):
+
+    def create(self, validated_data):
         password = validated_data.pop('password')
         password2 = validated_data.pop('password2')
         user = User(**validated_data)
-        if password == password2:
+        if password != password2:
             raise serializers.ValidationError({'password': 'Passwords must match'})
         user.set_password(password)
-        user.save
+        user.save()
+        return user

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Employees, Role, Status, Products, Type, Storefront, AssignedProducts
+from .models import Employees, Role, Status, Products, Type, Storefront, AssignedProducts, Request
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -64,3 +64,9 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+
+class RequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Request
+        fields = ['id', 'product', 'quantity', 'priority', 'type', 'justification', 'approval']

@@ -19,5 +19,6 @@ from . import views
 
 urlpatterns = [
     path('register/', views.UserCreate.as_view(), name='register_user'),
-    path('', views.Request_Handler.as_view(), name='handle_request'),
+    path('', views.RequestHandler.as_view(), name='handle_request'),
+    path('employee/', views.EmployeeHandler.as_view(), name='handle_employee'),
 ]

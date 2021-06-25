@@ -28,6 +28,9 @@ class Products(models.Model):
     Assigned_Employee = models.ManyToManyField(Employees)
 
 
+class ProductType(models.Model):
+    name = models.CharField(max_length=50)
+
 class Type(models.Model):
     name = models.CharField(max_length=50)
 
@@ -45,7 +48,9 @@ class AssignedProducts(models.Model):
 
 
 class Request(models.Model):
-    product = models.ForeignKey('Type', on_delete=models.RESTRICT)
+    product = models.ForeignKey('ProductType', on_delete=models.RESTRICT, default=None, blank=True, null=True)
     quantity = models.IntegerField(default=1)
-    priority = models.IntegerField(default=5,
-                                   validators=[MaxValueValidator(5), MinValueValidator(0)])
+    priority = models.IntegerField(default=5, validators=[MaxValueValidator(5), MinValueValidator(0)])
+    type = models.ForeignKey('Type', on_delete=models.RESTRICT, default=None, null=True)
+    justification = models.CharField(max_length=500, default=None, blank=True)
+    approval = models.BooleanField(default=None, null=True)

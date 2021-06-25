@@ -28,17 +28,42 @@ class RequestHandler(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
-        serializer = TypeSerializer(data=request.data)
+        serializer = RequestSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
         # user = validate(request.auth.payload.user_id)
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-def validate(user):
-    try:
-        user = Employees.objects.get(user=user)
-        return user
-    except:
-        return "Access not yet validated please check with your system administrator on request status"
+class ProductHandler(APIView):
+
+    def post(self, request):
+        serializer = ProductSerializer(data=request.data)
+        try:
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, product_id):
+        try:
+            product = Products.objects.get(pk=product_id)
+            serializer = ProductSerializer(data=request.data)
+            if serializer.is_valid():
+                product = serializer.update(product, request.data)
+                return Response(ProductSerializer(product).data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
+
+
+# def validate(user):
+#     try:
+#         user = Employees.objects.get(user=user)
+#         return user
+#     except:
+#         return "Access not yet validated please check with your system administrator on request status"

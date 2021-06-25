@@ -25,6 +25,10 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Products
         fields = ['id', 'hardware_version', 'employee_unit', 'status', 'model', 'Storefront']
+    def Update(self,instance,validated_data):
+        instance.status = validated_data('status', instance.status)
+        instance.save()
+        return instance
 
 
 class TypeSerializer(serializers.ModelSerializer):
@@ -69,4 +73,4 @@ class UserSerializer(serializers.ModelSerializer):
 class RequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Request
-        fields = ['id', 'product', 'quantity', 'priority', 'type', 'justification', 'approval']
+        fields = ['id', 'product', 'employee', 'quantity', 'priority', 'type', 'justification', 'approval']

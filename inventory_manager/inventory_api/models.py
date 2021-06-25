@@ -23,7 +23,7 @@ class Products(models.Model):
     hardware_version = models.CharField(max_length=50)
     employee_unit = models.BooleanField()
     status = models.ForeignKey('Status', on_delete=models.RESTRICT)
-    model = models.ForeignKey('Type', on_delete=models.RESTRICT)
+    model = models.ForeignKey('ProductType', on_delete=models.RESTRICT)
     Storefront = models.ForeignKey('Storefront', on_delete=models.RESTRICT)
     Assigned_Employee = models.ManyToManyField(Employees)
 
@@ -49,6 +49,7 @@ class AssignedProducts(models.Model):
 
 class Request(models.Model):
     product = models.ForeignKey('ProductType', on_delete=models.RESTRICT, default=None, blank=True, null=True)
+    employee = models.ForeignKey('Employees', on_delete=models.RESTRICT)
     quantity = models.IntegerField(default=1)
     priority = models.IntegerField(default=5, validators=[MaxValueValidator(5), MinValueValidator(0)])
     type = models.ForeignKey('Type', on_delete=models.RESTRICT, default=None, null=True)

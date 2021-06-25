@@ -50,6 +50,13 @@ class RequestApprover(APIView):
         request.save()
         return Response(RequestSerializer(request).data, status=status.HTTP_200_OK)
 
+    def delete(self,request,request_id):
+        request = Request.objects.get(pk=request_id)
+        request.completed = False
+        request.approval = False
+        request.save()
+        return Response(RequestSerializer(request).data, status=status.HTTP_200_OK)
+
 
 
 class ProductHandler(APIView):

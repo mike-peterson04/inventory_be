@@ -58,9 +58,28 @@ class RequestApprover(APIView):
         return Response(RequestSerializer(request).data, status=status.HTTP_200_OK)
 
 
-
 class ProductHandler(APIView):
     permission_classes = (IsAuthenticated,)
+
+    def get(self, request, filter_type, filter_value):
+
+        if filter_type == 'id':
+            products = Products.objects.filter(pk=filter_value)
+        elif filter_type == 'hardware_version':
+            products = Products.objects.filter(hardware_version=filter_value)
+        elif filter_type == 'employee_unit':
+            products = Products.objects.filter(employee_unit=filter_value)
+        elif filter_type == 'status':
+            products = Products.objects.filter(status=filter_value)
+        elif filter_type == 'model':
+            products = Products.objects.filter(model=filter_value)
+        else:
+            products = Products.objects.filter(Storefront=filter_value)
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
 
     def post(self, request):
         serializer = ProductSerializer(data=request.data)
@@ -82,6 +101,39 @@ class ProductHandler(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except:
             return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProductsHandler(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        products = Products.objects.all()
+
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = ProductSerializer(data=request.data)
+        try:
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class StatusHandler(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        serializer = StatusSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 # def validate(user):

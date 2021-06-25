@@ -19,9 +19,10 @@ from . import views
 
 urlpatterns = [
     path('', views.RequestHandler.as_view(), name='handle_request'),
-    path('<request_id>/', views.RequestApprover.as_view(), name='approve_request'),
+    path('modify/<request_id>/', views.RequestApprover.as_view(), name='approve_request'),
     path('register/', views.UserCreate.as_view(), name='register_user'),
     path('employee/', views.EmployeeHandler.as_view(), name='handle_employee'),
-    path('product/', views.ProductHandler.as_view(), name= 'handle_product'),
-    path('product/<product_id>/', views.ProductHandler.as_view(), name= 'handle_product')
+    path('product/', views.ProductsHandler.as_view(), name= 'handle_product'),
+    path('product/<product_id>/', views.ProductHandler.as_view(), name= 'individual_product'),
+    path('products/<filter_type>/<filter_value>', views.ProductHandler.as_view(), name='bulk_product')
 ]

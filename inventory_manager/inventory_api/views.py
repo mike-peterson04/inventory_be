@@ -31,13 +31,29 @@ class RequestHandler(APIView):
         serializer = RequestSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-        # user = validate(request.auth.payload.user_id)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class RequestApprover(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def put(self, request, request_id):
+        request = Request.objects.get(pk=request_id)
+        request.approval = True
+        request.save()
+        return Response(RequestSerializer(request).data, status=status.HTTP_200_OK)
+
+    def post(self, request, request_id):
+        request = Request.objects.get(pk=request_id)
+        request.completed = True
+        request.save()
+        return Response(RequestSerializer(request).data, status=status.HTTP_200_OK)
+
+
 
 class ProductHandler(APIView):
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         serializer = ProductSerializer(data=request.data)

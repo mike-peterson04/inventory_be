@@ -24,7 +24,7 @@ class Products(models.Model):
     employee_unit = models.BooleanField()
     status = models.ForeignKey('Status', on_delete=models.RESTRICT)
     model = models.ForeignKey('ProductType', on_delete=models.RESTRICT)
-    Storefront = models.ForeignKey('Storefront', on_delete=models.RESTRICT)
+    Storefront = models.ForeignKey('Storefront', on_delete=models.RESTRICT, default=None, blank=True, null=True)
     Assigned_Employee = models.ManyToManyField(Employees)
 
 
@@ -55,3 +55,4 @@ class Request(models.Model):
     type = models.ForeignKey('Type', on_delete=models.RESTRICT, default=None, null=True)
     justification = models.CharField(max_length=500, default=None, blank=True)
     approval = models.BooleanField(default=None, null=True)
+    completed = models.BooleanField(default=None, null=True)

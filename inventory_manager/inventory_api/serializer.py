@@ -25,8 +25,14 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Products
         fields = ['id', 'hardware_version', 'employee_unit', 'status', 'model', 'Storefront']
-    def Update(self,instance,validated_data):
-        instance.status = validated_data('status', instance.status)
+
+    def update(self, instance, validated_data):
+        instance.hardware_version = validated_data.get('hardware_version', instance.hardware_version)
+        instance.employee_unit = validated_data.get('employee_unit', instance.hardware_version)
+        instance.model_id = validated_data.get('model', instance.model)
+        instance.Storefront = validated_data.get('Storefront', instance.Storefront)
+        instance.hardware_version = validated_data.get('hardware_version', instance.hardware_version)
+        instance.status_id = validated_data.get('status', instance.status)
         instance.save()
         return instance
 
@@ -73,4 +79,4 @@ class UserSerializer(serializers.ModelSerializer):
 class RequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Request
-        fields = ['id', 'product', 'employee', 'quantity', 'priority', 'type', 'justification', 'approval']
+        fields = ['id', 'product', 'employee', 'quantity', 'priority', 'type', 'justification', 'approval', 'completed']

@@ -7,7 +7,7 @@ class Employees(models.Model):
     name = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
     role = models.ForeignKey('Role', on_delete=models.RESTRICT, default=None, blank=True, null=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, unique=True)
 
 
 class Role(models.Model):

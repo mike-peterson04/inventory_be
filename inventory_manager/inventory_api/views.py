@@ -35,8 +35,10 @@ class EmployeeUnprotected(APIView):
     def get(self,request):
         product_model = ProductType.objects.all()
         status_type = Status.objects.all()
+        request_type = RequestType.objects.all()
         list = {"products": ProductTypeSerializer(product_model, many=True).data,
-                "status": StatusSerializer(status_type, many=True).data}
+                "status": StatusSerializer(status_type, many=True).data,
+                "request": RequestTypeSerializer(request_type, many=True).data}
         return Response(list, status=status.HTTP_200_OK)
 
 

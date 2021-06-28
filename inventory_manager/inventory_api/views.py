@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
+from datetime import date
 from .serializer import *
 
 
@@ -34,6 +35,7 @@ class EmployeeUnprotected(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self,request):
+        product_state_validation()
         product_model = ProductType.objects.all()
         status_type = Status.objects.all()
         request_type = RequestType.objects.all()
@@ -103,6 +105,7 @@ class RequestApprover(APIView):
 class StoreHandler(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self,request,manager_id):
+        product_state_validation()
         try:
             store = Storefront.objects.get(manager_id=manager_id)
             return Response(StorefrontSerializer(store).data, status=status.HTTP_200_OK)
@@ -113,6 +116,7 @@ class ProductHandler(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, filter_type, filter_value):
+        product_state_validation()
 
         if filter_type == 'id':
             products = Products.objects.filter(pk=filter_value)
@@ -156,6 +160,7 @@ class ProductsHandler(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
+        product_state_validation()
         products = Products.objects.all()
 
         serializer = ProductSerializer(products, many=True)
@@ -182,6 +187,24 @@ class StatusHandler(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def product_state_validation():
+    products = Products.objects.all()
+    for product in products:
+        if product.status.name == 'Sold':
+            temp = StoreInventory.objects.get(product_id=product.id)
+            if temp.checked_out:
+                temp.checked_out = False
+                temp.date_removed = date.today()
+                temp.save()
+        elif product.status.name == 'Pending_Check_In':
+            temp = Assigned_Employee.objects.filter(product_id=product.id)
+            for employee in temp:
+                if employee.checked_out:
+                    employee.checked_out = False
+                    employee.date_returned = date.today()
+                    employee.save()
+
 
 
 def status_key():

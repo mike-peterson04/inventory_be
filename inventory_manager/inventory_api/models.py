@@ -31,7 +31,7 @@ class Products(models.Model):
 class ProductType(models.Model):
     name = models.CharField(max_length=50)
 
-class Type(models.Model):
+class RequestType(models.Model):
     name = models.CharField(max_length=50)
 
 
@@ -52,7 +52,7 @@ class Request(models.Model):
     employee = models.ForeignKey('Employees', on_delete=models.RESTRICT)
     quantity = models.IntegerField(default=1)
     priority = models.IntegerField(default=5, validators=[MaxValueValidator(5), MinValueValidator(0)])
-    type = models.ForeignKey('Type', on_delete=models.RESTRICT, default=None, null=True)
+    type = models.ForeignKey('RequestType', on_delete=models.RESTRICT, default=None, null=True)
     justification = models.CharField(max_length=500, default=None, blank=True)
     approval = models.BooleanField(default=None, null=True)
     completed = models.BooleanField(default=None, null=True)

@@ -32,6 +32,10 @@ class EmployeeUnprotected(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def get(self,request):
+        product_model = ProductType.objects.all()
+        return Response(ProductTypeSerializer(product_model, many=True).data, status=status.HTTP_200_OK)
+
 
 class EmployeeHandler(APIView):
     permission_classes = (IsAuthenticated,)

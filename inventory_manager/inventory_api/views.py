@@ -13,6 +13,17 @@ class UserCreate(generics.CreateAPIView):
     serializer_class = UserSerializer
 
 
+class EmployeeActions(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self,request,employee_id):
+        products = Assigned_Employee.objects.filter(employee=employee_id)
+        product_return = []
+        for product in products:
+            if product.checked_out:
+                product_return.append(product.product)
+        return Response(ProductSerializer(product_return, many=True).data, status=status.HTTP_200_OK)
+
+
 class EmployeeUnprotected(APIView):
     def post(self, request):
         serializer = EmployeeSerializer(data=request.data)

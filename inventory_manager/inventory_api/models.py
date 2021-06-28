@@ -25,7 +25,7 @@ class Products(models.Model):
     status = models.ForeignKey('Status', on_delete=models.RESTRICT)
     model = models.ForeignKey('ProductType', on_delete=models.RESTRICT)
     Storefront = models.ForeignKey('Storefront', on_delete=models.RESTRICT, default=None, blank=True, null=True)
-    Assigned_Employee = models.ManyToManyField(Employees)
+    Assigned_Employee = models.ManyToManyField(Employees, through='Assigned_Employee')
 
 
 class ProductType(models.Model):
@@ -40,7 +40,7 @@ class Storefront(models.Model):
     name = models.CharField(max_length=50)
 
 
-class AssignedProducts(models.Model):
+class Assigned_Employee(models.Model):
     employee = models.ForeignKey(Employees, on_delete=models.CASCADE)
     product = models.ForeignKey(Products, on_delete=models.CASCADE)
     checked_out = models.BooleanField(default=True)

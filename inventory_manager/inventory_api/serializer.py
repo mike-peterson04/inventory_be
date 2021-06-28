@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Employees, Role, Status, Products, Type, Storefront, AssignedProducts, Request
+from .models import Employees, Role, Status, Products, Type, Storefront, Assigned_Employee, Request
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -51,7 +51,7 @@ class StorefrontSerializer(serializers.ModelSerializer):
 
 class AssignedProductsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AssignedProducts
+        model = Assigned_Employee
         fields = ['id', 'employee', 'product', 'checked_out', 'date_returned']
 
 

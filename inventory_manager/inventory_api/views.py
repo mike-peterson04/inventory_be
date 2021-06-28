@@ -26,6 +26,23 @@ class EmployeeActions(APIView):
 
 
 
+class StockHandler(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self,request,store_id):
+        product_state_validation()
+        try:
+            products = []
+            stock = Products.objects.filter(Storefront=store_id)
+            for item in stock:
+                if item.status.name != 'Sold' and item.status.name != 'Returning_From_Store':
+                    products.append(item)
+            return Response(ProductSerializer(products, many=True).data, status=status.HTTP_200_OK)
+        except:
+            return Response(request.data,status=status.HTTP_400_BAD_REQUEST)
+
+
+
 class EmployeeUnprotected(APIView):
     def post(self, request):
         serializer = EmployeeSerializer(data=request.data)
@@ -191,13 +208,7 @@ class StatusHandler(APIView):
 def product_state_validation():
     products = Products.objects.all()
     for product in products:
-        if product.status.name == 'Sold':
-            temp = StoreInventory.objects.get(product_id=product.id)
-            if temp.checked_out:
-                temp.checked_out = False
-                temp.date_removed = date.today()
-                temp.save()
-        elif product.status.name == 'Pending_Check_In':
+        if product.status.name == 'Pending_Check_In':
             temp = Assigned_Employee.objects.filter(product_id=product.id)
             for employee in temp:
                 if employee.checked_out:

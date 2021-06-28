@@ -100,6 +100,14 @@ class RequestApprover(APIView):
         request.save()
         return Response(RequestSerializer(request).data, status=status.HTTP_200_OK)
 
+class StoreHandler(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self,request,manager_id):
+        try:
+            store = Storefront.objects.get(manager_id=manager_id)
+            return Response(StorefrontSerializer(store).data, status=status.HTTP_200_OK)
+        except:
+            return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
 
 class ProductHandler(APIView):
     permission_classes = (IsAuthenticated,)

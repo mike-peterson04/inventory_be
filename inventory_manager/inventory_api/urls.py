@@ -27,5 +27,6 @@ urlpatterns = [
     path('product/<product_id>/', views.ProductHandler.as_view(), name= 'individual_product'),
     path('products/<filter_type>/<filter_value>', views.ProductHandler.as_view(), name='bulk_product'),
     path('myproducts/<employee_id>/', views.EmployeeActions.as_view(), name='Employee_actions'),
+    path('store/<manager_id>', views.StoreHandler.as_view(), name='store_handler'),
     path('role/', views.RoleHandler.as_view(), name='role_handler')
 ]

@@ -41,6 +41,13 @@ class Storefront(models.Model):
     name = models.CharField(max_length=50)
 
 
+class StoreInventory(models.Model):
+    product = models.OneToOneField(Products, on_delete=models.CASCADE)
+    store = models.ForeignKey(Storefront, on_delete=models.CASCADE)
+    checked_out = models.BooleanField(default=True)
+    date_removed = models.DateField(default=None, blank=True, null=True)
+
+
 class Assigned_Employee(models.Model):
     employee = models.ForeignKey(Employees, on_delete=models.CASCADE)
     product = models.ForeignKey(Products, on_delete=models.CASCADE)

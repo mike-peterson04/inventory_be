@@ -33,6 +33,7 @@ class ProductType(models.Model):
 
 class RequestType(models.Model):
     name = models.CharField(max_length=50)
+    access = models.IntegerField(default=1, validators=[MaxValueValidator(4), MinValueValidator(1)])
 
 
 class Storefront(models.Model):

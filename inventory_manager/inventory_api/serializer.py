@@ -40,7 +40,7 @@ class ProductSerializer(serializers.ModelSerializer):
 class RequestTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = RequestType
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'access']
 
 class ProductTypeSerializer(serializers.ModelSerializer):
     class Meta:

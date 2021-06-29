@@ -124,8 +124,12 @@ class StoreHandler(APIView):
     def get(self,request,manager_id):
         product_state_validation()
         try:
-            store = Storefront.objects.get(manager_id=manager_id)
-            return Response(StorefrontSerializer(store).data, status=status.HTTP_200_OK)
+            if int(manager_id) > 0:
+                store = Storefront.objects.get(manager_id=manager_id)
+                return Response(StorefrontSerializer(store).data, status=status.HTTP_200_OK)
+            else:
+                store = Storefront.objects.all()
+                return Response(StorefrontSerializer(store, many=True).data, status=status.HTTP_200_OK)
         except:
             return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
 

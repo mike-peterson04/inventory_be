@@ -16,7 +16,8 @@ class Role(models.Model):
 
 class Status(models.Model):
     name = models.CharField(max_length=50)
-    available = models.BooleanField()
+    available = models.BooleanField(default=False)
+    returning = models.BooleanField(default=False)
 
 
 class Products(models.Model):

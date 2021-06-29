@@ -129,6 +129,26 @@ class StoreHandler(APIView):
         except:
             return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
 
+    def put(self,request,manager_id):
+        valid = ProductSerializer(data=request.data,many=True)
+        result = []
+        try:
+            if valid.is_valid():
+                for item in request.data:
+                    print(item['id'])
+                    if item['employee_unit'].upper() == 'FALSE':
+                        item['employee_unit'] = False
+                    elif item['employee_unit'].upper() == 'TRUE':
+                        item['employee_unit'] = True
+                    product = Products.objects.get(pk=item['id'])
+                    serializer = ProductSerializer(data=item)
+                    print(serializer.is_valid())
+                    result.append(serializer.update(product, item))
+                return Response(ProductSerializer(result, many=True).data, status=status.HTTP_200_OK)
+            return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class ProductHandler(APIView):
     permission_classes = (IsAuthenticated,)
 

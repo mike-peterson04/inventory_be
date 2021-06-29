@@ -28,7 +28,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.hardware_version = validated_data.get('hardware_version', instance.hardware_version)
-        instance.employee_unit = validated_data.get('employee_unit', instance.hardware_version)
+        instance.employee_unit = validated_data.get('employee_unit', instance.employee_unit)
         instance.model_id = validated_data.get('model', instance.model)
         instance.Storefront_id = validated_data.get('Storefront', instance.Storefront)
         instance.hardware_version = validated_data.get('hardware_version', instance.hardware_version)

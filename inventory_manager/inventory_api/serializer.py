@@ -30,7 +30,7 @@ class ProductSerializer(serializers.ModelSerializer):
         instance.hardware_version = validated_data.get('hardware_version', instance.hardware_version)
         instance.employee_unit = validated_data.get('employee_unit', instance.hardware_version)
         instance.model_id = validated_data.get('model', instance.model)
-        instance.Storefront = validated_data.get('Storefront', instance.Storefront)
+        instance.Storefront_id = validated_data.get('Storefront', instance.Storefront)
         instance.hardware_version = validated_data.get('hardware_version', instance.hardware_version)
         instance.status_id = validated_data.get('status', instance.status)
         instance.save()

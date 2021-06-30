@@ -191,6 +191,7 @@ class ProductHandler(APIView):
             serializer = ProductSerializer(data=request.data)
             if serializer.is_valid():
                 product = serializer.update(product, request.data)
+                product_state_validation()
                 return Response(ProductSerializer(product).data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except:
@@ -232,7 +233,9 @@ class StatusHandler(APIView):
 def product_state_validation():
     products = Products.objects.all()
     for product in products:
-        if product.status.name == 'Pending_Check_In':
+        if product.status.name == 'In_Stock':
+            product.Storefront = None
+            product.save()
             temp = Assigned_Employee.objects.filter(product_id=product.id)
             for employee in temp:
                 if employee.checked_out:

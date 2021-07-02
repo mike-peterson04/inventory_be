@@ -97,14 +97,29 @@ class RequestHandler(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+    def get(self, request):
+        requests = Request.objects.all()
+        try:
+
+            return Response(RequestSerializer(requests,many=True).data,status=status.HTTP_200_OK)
+        except:
+            return Response(request.data,status=status.HTTP_400_BAD_REQUEST)
+
+
 class RequestApprover(APIView):
     permission_classes = (IsAuthenticated,)
 
     def put(self, request, request_id):
-        request = Request.objects.get(pk=request_id)
-        request.approval = True
-        request.save()
-        return Response(RequestSerializer(request).data, status=status.HTTP_200_OK)
+        requests = Request.objects.get(pk=request_id)
+
+        if request.data['value']:
+            requests.approval = True
+            requests.save()
+        elif not request.data['value']:
+            requests.approval = False
+            requests.save()
+
+        return Response(RequestSerializer(requests).data, status=status.HTTP_200_OK)
 
     def post(self, request, request_id):
         request = Request.objects.get(pk=request_id)

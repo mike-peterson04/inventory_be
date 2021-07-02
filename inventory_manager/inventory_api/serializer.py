@@ -27,6 +27,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['id', 'hardware_version', 'employee_unit', 'status', 'model', 'Storefront']
 
     def update(self, instance, validated_data):
+
         instance.hardware_version = validated_data.get('hardware_version', instance.hardware_version)
         instance.employee_unit = validated_data.get('employee_unit', instance.employee_unit)
         instance.model_id = validated_data.get('model', instance.model)
@@ -35,6 +36,8 @@ class ProductSerializer(serializers.ModelSerializer):
         instance.status_id = validated_data.get('status', instance.status)
         instance.save()
         return instance
+
+
 
 
 class RequestTypeSerializer(serializers.ModelSerializer):

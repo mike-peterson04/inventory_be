@@ -14,6 +14,33 @@ class UserCreate(generics.CreateAPIView):
     serializer_class = UserSerializer
 
 
+class AssignProduct(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self,request,employee_id):
+        try:
+            for product in request.data:
+                item = Products.objects.get(pk=int(product['id']))
+                assign = Assigned_Employee.objects.create(employee_id=employee_id, product_id=item.id)
+                item.status_id = 6
+                item.save()
+            return Response(request.data, status=status.HTTP_201_CREATED)
+
+        except:
+            return Response(request.data,status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self,request,employee_id):
+        try:
+            store = Storefront.objects.get(manager_id=employee_id)
+            for item in request.data:
+                product = Products.objects.get(pk=item['id'])
+                product.Storefront = store
+                product.status_id = 8
+                product.save()
+        except:
+            return Response(request.data,status=status.HTTP_400_BAD_REQUEST)
+
+
 class EmployeeActions(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self,request,employee_id):
@@ -95,6 +122,15 @@ class RequestHandler(APIView):
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self,request):
+        try:
+            requests = Request.objects.get(pk=request.data['id'])
+            requests.completed = True
+            requests.save()
+            return Response(RequestSerializer(requests).data,status=status.HTTP_200_OK)
+        except:
+            return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
 
 
     def get(self, request):

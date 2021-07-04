@@ -22,6 +22,7 @@ urlpatterns = [
     path('modify/<request_id>/', views.RequestApprover.as_view(), name='approve_request'),
     path('register/', views.UserCreate.as_view(), name='register_user'),
     path('employee/', views.EmployeeHandler.as_view(), name='handle_employee'),
+    path('employee/<employee_id>/', views.EmployeeHandler.as_view(), name='handle_specific_employee'),
     path('initial/', views.EmployeeUnprotected.as_view(), name='unprotected_employee'),
     path('product/', views.ProductsHandler.as_view(), name='handle_product'),
     path('product/<product_id>/', views.ProductHandler.as_view(), name= 'individual_product'),

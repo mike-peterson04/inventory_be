@@ -38,7 +38,7 @@ class RequestType(models.Model):
 
 
 class Storefront(models.Model):
-    manager = models.ForeignKey('Employees', on_delete=models.RESTRICT)
+    manager = models.ForeignKey('Employees', on_delete=models.RESTRICT, unique=True)
     name = models.CharField(max_length=50)
 
 

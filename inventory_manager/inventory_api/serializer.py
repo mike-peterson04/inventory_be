@@ -8,6 +8,14 @@ class EmployeeSerializer(serializers.ModelSerializer):
         model = Employees
         fields = ['id', 'name', 'email', 'role', 'user']
 
+        def update(self, instance, validated_data):
+            instance.name = validated_data.get('name', instance.name)
+            instance.email = validated_data.get('email', instance.email)
+            instance.role_id = validated_data.get('role', instance.role)
+            instance.user_id = validated_data.get('user', instance.user)
+            instance.save()
+            return instance
+
 
 class RoleSerializer(serializers.ModelSerializer):
     class Meta:

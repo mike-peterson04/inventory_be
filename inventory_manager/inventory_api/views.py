@@ -37,6 +37,7 @@ class AssignProduct(APIView):
                 product.Storefront = store
                 product.status_id = 8
                 product.save()
+            return Response(request.data,status=status.HTTP_200_OK)
         except:
             return Response(request.data,status=status.HTTP_400_BAD_REQUEST)
 
@@ -95,6 +96,16 @@ class EmployeeHandler(APIView):
     def get(self,request):
         employees = Employees.objects.all()
         return Response(EmployeeSerializer(employees, many=True).data, status=status.HTTP_200_OK)
+
+    def put(self, request, employee_id):
+        try:
+            employee = Employees.objects.get(pk=employee_id)
+            employee.role_id = request.data['role']
+            employee.save()
+            return Response(EmployeeSerializer(employee).data, status=status.HTTP_200_OK)
+
+        except:
+            return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RoleHandler(APIView):
@@ -172,6 +183,15 @@ class RequestApprover(APIView):
 
 class StoreHandler(APIView):
     permission_classes = (IsAuthenticated,)
+
+    def post(self, request, manager_id):
+        serializer = StorefrontSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def get(self,request,manager_id):
         product_state_validation()
         try:

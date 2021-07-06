@@ -24,6 +24,7 @@ urlpatterns = [
     path('employee/', views.EmployeeHandler.as_view(), name='handle_employee'),
     path('employee/<employee_id>/', views.EmployeeHandler.as_view(), name='handle_specific_employee'),
     path('initial/', views.EmployeeUnprotected.as_view(), name='unprotected_employee'),
+    path('status/', views.StatusHandler.as_view(), name='status_modification'),
     path('product/', views.ProductsHandler.as_view(), name='handle_product'),
     path('product/<product_id>/', views.ProductHandler.as_view(), name= 'individual_product'),
     path('products/<filter_type>/<filter_value>', views.ProductHandler.as_view(), name='bulk_product'),

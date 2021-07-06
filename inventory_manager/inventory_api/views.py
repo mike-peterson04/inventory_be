@@ -108,6 +108,17 @@ class EmployeeHandler(APIView):
             return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
 
 
+class ProductTypeHandler(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        serializer = ProductTypeSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class RoleHandler(APIView):
     permission_classes = (IsAuthenticated,)
 

@@ -300,6 +300,19 @@ class ProductsHandler(APIView):
         except:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class BulkProducts(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        serializer = ProductSerializer(data=request.data, many=True)
+        try:
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class StatusHandler(APIView):

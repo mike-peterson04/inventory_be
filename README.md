@@ -85,11 +85,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+This is my final project for DevCodeCamp, it is the backend of a inventory managment system, the frontend can be found below. the entire project was built over a 10 day sprint.
 
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`inventory_be`, `twitter_handle`, `email`, `project_title`, `project_description`
 
 
 ### Built With
@@ -125,7 +122,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email
+Mike Peterson -  <a href=mailto:mpeterson2004@gmail.com>mpeterson2004@gmail.com</a>
 
 Project Link: [https://github.com/mike-peterson04/inventory_be](https://github.com/mike-peterson04/inventory_be)
 

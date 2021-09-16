@@ -94,44 +94,17 @@ Here's a blank template to get started:
 
 ### Built With
 
-* []()
-* []()
-* []()
-
-
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-To get a local copy up and running follow these simple steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-1. Clone the repo
-   ```sh
-   git clone https://github.com/mike-peterson04/inventory_be.git
-   ```
-2. Install NPM packages
-   ```sh
-   npm install
-   ```
+* [python](https://www.python.org/)
+* [django](https://www.djangoproject.com/)
+* [mySql](https://www.mysql.com/)
 
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+This is a backend API intended to work in tandem with the following repository:
+[Documentation](https://github.com/mike-peterson04/inventory_FE)_
 
 
 
@@ -139,19 +112,6 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 ## Roadmap
 
 See the [open issues](https://github.com/mike-peterson04/inventory_be/issues) for a list of proposed features (and known issues).
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 
 
@@ -195,4 +155,4 @@ Project Link: [https://github.com/mike-peterson04/inventory_be](https://github.c
 [license-shield]: https://img.shields.io/github/license/mike-peterson04/inventory_be.svg?style=for-the-badge
 [license-url]: https://github.com/mike-peterson04/inventory_be/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/mike-peterson04
+[linkedin-url]: https://www.linkedin.com/in/mike-peterson-5a0b39131/
